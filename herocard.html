@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<title>Codex Hero Core</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial, sans-serif;
+}
+
+body{
+width:100vw;
+height:100vh;
+overflow:hidden;
+background:
+radial-gradient(circle at top,
+#18314f 0%,
+#0f2238 38%,
+#070d18 100%);
+color:#e6f1ff;
+}
+
+/* MAIN HERO */
+
+.hero-core{
+position:relative;
+width:100%;
+height:100vh;
+overflow:hidden;
+border:
+1px solid rgba(77,163,255,0.12);
+background:
+linear-gradient(
+180deg,
+rgba(20,35,58,0.32),
+rgba(5,10,18,0.42)
+);
+backdrop-filter:blur(10px);
+}
+
+/* CORNER BRACKETS */
+
+.corner{
+position:absolute;
+width:34px;
+height:34px;
+opacity:.45;
+z-index:5;
+}
+
+.corner.tl{
+top:12px;
+left:12px;
+border-top:1px solid #4da3ff;
+border-left:1px solid #4da3ff;
+}
+
+.corner.tr{
+top:12px;
+right:12px;
+border-top:1px solid #4da3ff;
+border-right:1px solid #4da3ff;
+}
+
+.corner.bl{
+bottom:12px;
+left:12px;
+border-bottom:1px solid #4da3ff;
+border-left:1px solid #4da3ff;
+}
+
+.corner.br{
+bottom:12px;
+right:12px;
+border-bottom:1px solid #4da3ff;
+border-right:1px solid #4da3ff;
+}
+
+/* SCANLINE */
+
+.scanline{
+position:absolute;
+top:-100%;
+left:0;
+width:100%;
+height:140px;
+background:
+linear-gradient(
+to bottom,
+rgba(77,163,255,0),
+rgba(77,163,255,0.08),
+rgba(77,163,255,0)
+);
+animation:scanMove 8s linear infinite;
+pointer-events:none;
+z-index:2;
+}
+
+@keyframes scanMove{
+0%{top:-20%;}
+100%{top:120%;}
+}
+
+/* DATA STREAMS */
+
+.stream{
+position:absolute;
+bottom:-80px;
+width:1px;
+background:
+linear-gradient(
+to top,
+rgba(77,163,255,0),
+rgba(77,163,255,.35),
+rgba(77,163,255,0)
+);
+opacity:.35;
+animation:streamRise linear infinite;
+}
+
+@keyframes streamRise{
+from{
+transform:translateY(0);
+}
+to{
+transform:translateY(-140vh);
+}
+}
+
+/* STATUS STACK */
+
+<!-- STATUS STACK -->
+<div id="statusStack" style="
+position:absolute;
+top:16px;
+left:16px;
+display:flex;
+flex-direction:column;
+gap:8px;
+z-index:20;
+">
+
+/* STATUS CARDS */
+
+.status-card{
+background:
+rgba(7,14,24,0.88);
+border:
+1px solid rgba(77,163,255,0.16);
+padding:10px 14px;
+border-radius:12px;
+font-size:11px;
+letter-spacing:1px;
+min-width:180px;
+text-align:center;
+box-shadow:
+0 0 14px rgba(77,163,255,0.08);
+transition:all .35s ease;
+backdrop-filter:blur(8px);
+}
+
+/* HERO CENTER */
+
+.center-core{
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+text-align:center;
+width:90%;
+z-index:6;
+}
+
+/* TACTICAL RING */
+
+.ring{
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+width:320px;
+height:320px;
+border-radius:50%;
+border:
+1px dashed rgba(77,163,255,0.12);
+animation:ringRotate 22s linear infinite;
+pointer-events:none;
+}
+
+.ring::before{
+content:"";
+position:absolute;
+inset:18px;
+border-radius:50%;
+border:
+1px solid rgba(255,120,40,0.08);
+}
+
+@keyframes ringRotate{
+from{
+transform:translate(-50%,-50%) rotate(0deg);
+}
+to{
+transform:translate(-50%,-50%) rotate(360deg);
+}
+}
+
+/* LIVE NODE */
+
+.live-node{
+width:14px;
+height:14px;
+border-radius:50%;
+background:#00ff99;
+position:absolute;
+top:-12px;
+right:12%;
+box-shadow:
+0 0 12px #00ff99;
+animation:nodePulse 2s infinite;
+}
+
+@keyframes nodePulse{
+0%{transform:scale(1);}
+50%{transform:scale(1.3);}
+100%{transform:scale(1);}
+}
+
+/* TITLE */
+
+.hero-title{
+font-size:40px;
+font-weight:800;
+line-height:1.1;
+letter-spacing:1px;
+text-shadow:
+0 0 24px rgba(77,163,255,0.25);
+position:relative;
+z-index:5;
+}
+
+/* SUBTITLE */
+
+.subtitle{
+margin-top:18px;
+font-size:18px;
+opacity:.72;
+font-style:italic;
+}
+
+.subtitle2{
+margin-top:10px;
+font-size:17px;
+opacity:.52;
+font-style:italic;
+}
+
+/* FEED */
+
+.feed{
+margin-top:26px;
+font-size:12px;
+letter-spacing:1px;
+opacity:.65;
+color:#8ec8ff;
+min-height:14px;
+}
+
+/* PULSE */
+
+.heroPulse{
+animation:heroPulse .5s ease;
+}
+
+@keyframes heroPulse{
+0%{
+box-shadow:0 0 0 rgba(77,163,255,0);
+}
+50%{
+box-shadow:0 0 42px rgba(77,163,255,.25);
+}
+100%{
+box-shadow:0 0 0 rgba(77,163,255,0);
+}
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="hero-core" id="hero">
+
+  <!-- CORNERS -->
+  <div class="corner tl"></div>
+  <div class="corner tr"></div>
+  <div class="corner bl"></div>
+  <div class="corner br"></div>
+
+  <!-- SCAN -->
+  <div class="scanline"></div>
+
+  <!-- STREAMS -->
+  <div class="stream" style="left:8%;height:80px;animation-duration:7s;"></div>
+  <div class="stream" style="left:18%;height:120px;animation-duration:11s;"></div>
+  <div class="stream" style="left:33%;height:90px;animation-duration:9s;"></div>
+  <div class="stream" style="left:51%;height:140px;animation-duration:13s;"></div>
+  <div class="stream" style="left:64%;height:80px;animation-duration:8s;"></div>
+  <div class="stream" style="left:78%;height:110px;animation-duration:10s;"></div>
+  <div class="stream" style="left:91%;height:95px;animation-duration:12s;"></div>
+
+  <!-- STATUS STACK -->
+  <div class="status-stack">
+
+    <div class="status-card" id="status1">
+      ⚡ SYSTEM : ONLINE
+    </div>
+
+    <div class="status-card" id="status2">
+      ⌬ NETWORK : LIVE
+    </div>
+
+    <div class="status-card" id="clockCard">
+      UTC +05:30 • 00:00:00
+    </div>
+
+  </div>
+
+  <!-- HERO CENTER -->
+  <div class="center-core">
+
+    <div class="ring"></div>
+
+    <div class="live-node" id="node"></div>
+
+    <div class="hero-title">
+      ⚔ CODEX COMMAND<br/>
+      CORE
+    </div>
+
+    <div class="subtitle">
+      Strategic Control Interface v5
+    </div>
+
+    <div class="subtitle2">
+      (Under Construction)
+    </div>
+
+    <div class="feed" id="feed">
+      > Synchronizing tactical relay...
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+
+const statusA = [
+"⚡ SYSTEM : ONLINE",
+"📡 RADIO : ACTIVE",
+"🛰 SIGNAL : STABLE",
+"🧠 AI CORE : READY"
+];
+
+const statusB = [
+"⌬ NETWORK : LIVE",
+"⚔ EVENT GRID : ACTIVE",
+"🔒 SECURITY : STABLE",
+"📁 DATASTREAM : LINKED"
+];
+
+const feeds = [
+"> Synchronizing tactical relay...",
+"> Arena systems stabilized",
+"> New operative detected",
+"> Tactical uplink completed",
+"> Command node secured"
+];
+
+let a = 0;
+let b = 0;
+let f = 0;
+
+const s1 = document.getElementById("status1");
+const s2 = document.getElementById("status2");
+const feed = document.getElementById("feed");
+const hero = document.getElementById("hero");
+const node = document.getElementById("node");
+
+setInterval(()=>{
+
+a=(a+1)%statusA.length;
+b=(b+1)%statusB.length;
+f=(f+1)%feeds.length;
+
+s1.innerHTML=statusA[a];
+s2.innerHTML=statusB[b];
+feed.innerHTML=feeds[f];
+
+hero.classList.add("heroPulse");
+
+node.style.boxShadow="0 0 28px #00ff99";
+
+setTimeout(()=>{
+hero.classList.remove("heroPulse");
+node.style.boxShadow="0 0 12px #00ff99";
+},500);
+
+},3000);
+
+/* CLOCK */
+
+function updateClock(){
+
+const now = new Date();
+
+const time =
+now.toLocaleTimeString(
+'en-GB',
+{
+hour12:false,
+timeZone:'Asia/Kolkata'
+}
+);
+
+document.getElementById("clockCard").innerHTML =
+"UTC +05:30 • " + time;
+
+}
+
+setInterval(updateClock,1000);
+updateClock();
+
+</script>
+
+</body>
+</html>
