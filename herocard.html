@@ -34,13 +34,12 @@ position:relative;
 width:100%;
 height:100vh;
 overflow:hidden;
-border:
-1px solid rgba(77,163,255,0.12);
+border:1px solid rgba(77,163,255,0.12);
 background:
 linear-gradient(
 180deg,
-rgba(20,35,58,0.32),
-rgba(5,10,18,0.42)
+rgba(20,35,58,0.18),
+rgba(5,10,18,0.26)
 );
 backdrop-filter:blur(10px);
 }
@@ -112,7 +111,7 @@ z-index:2;
 
 .stream{
 position:absolute;
-bottom:-80px;
+bottom:-120px;
 width:1px;
 background:
 linear-gradient(
@@ -130,40 +129,121 @@ from{
 transform:translateY(0);
 }
 to{
-transform:translateY(-140vh);
+transform:translateY(-160vh);
 }
 }
 
 /* STATUS STACK */
 
-<!-- STATUS STACK -->
-<div id="statusStack" style="
+.status-stack{
 position:absolute;
-top:16px;
-left:16px;
+top:18px;
+right:18px;
 display:flex;
 flex-direction:column;
-gap:8px;
+gap:10px;
 z-index:20;
-">
+}
+
+/* CLOCK CARD */
+
+.clock-wrapper{
+position:absolute;
+top:18px;
+left:18px;
+z-index:20;
+}
+
+/* SOFT PADDED CARD STYLE */
+
+.soft-card{
+background:
+linear-gradient(
+180deg,
+rgba(14,24,40,0.88),
+rgba(8,14,24,0.92)
+);
+
+border:
+1px solid rgba(77,163,255,0.16);
+
+padding:12px 16px;
+
+border-radius:16px;
+
+backdrop-filter:blur(14px);
+
+box-shadow:
+0 0 18px rgba(77,163,255,0.08),
+inset 0 1px 0 rgba(255,255,255,0.04);
+
+position:relative;
+
+overflow:hidden;
+
+transition:all .35s ease;
+}
+
+/* CARD TOP GLOW */
+
+.soft-card::before{
+content:"";
+position:absolute;
+top:0;
+left:0;
+width:100%;
+height:1px;
+background:
+linear-gradient(
+90deg,
+transparent,
+rgba(120,190,255,0.6),
+transparent
+);
+opacity:.7;
+}
 
 /* STATUS CARDS */
 
 .status-card{
-background:
-rgba(7,14,24,0.88);
-border:
-1px solid rgba(77,163,255,0.16);
-padding:10px 14px;
-border-radius:12px;
+min-width:220px;
 font-size:11px;
 letter-spacing:1px;
-min-width:180px;
-text-align:center;
-box-shadow:
-0 0 14px rgba(77,163,255,0.08);
-transition:all .35s ease;
-backdrop-filter:blur(8px);
+color:#cfe8ff;
+text-transform:uppercase;
+}
+
+.status-label{
+font-size:9px;
+opacity:.45;
+margin-bottom:5px;
+letter-spacing:1.5px;
+}
+
+.status-main{
+font-size:12px;
+font-weight:700;
+}
+
+/* CLOCK */
+
+.clock-card{
+min-width:210px;
+text-align:left;
+}
+
+.clock-title{
+font-size:9px;
+opacity:.45;
+letter-spacing:1.5px;
+margin-bottom:6px;
+}
+
+.clock-time{
+font-size:14px;
+font-weight:700;
+color:#8fd0ff;
+letter-spacing:1px;
 }
 
 /* HERO CENTER */
@@ -316,19 +396,48 @@ box-shadow:0 0 0 rgba(77,163,255,0);
   <div class="stream" style="left:78%;height:110px;animation-duration:10s;"></div>
   <div class="stream" style="left:91%;height:95px;animation-duration:12s;"></div>
 
+  <!-- CLOCK -->
+  <div class="clock-wrapper">
+
+    <div class="soft-card clock-card">
+
+      <div class="clock-title">
+        GLOBAL TIME NODE
+      </div>
+
+      <div class="clock-time" id="clockCard">
+        UTC +05:30 • 00:00:00
+      </div>
+
+    </div>
+
+  </div>
+
   <!-- STATUS STACK -->
   <div class="status-stack">
 
-    <div class="status-card" id="status1">
-      ⚡ SYSTEM : ONLINE
+    <div class="soft-card status-card" id="status1">
+
+      <div class="status-label">
+        SYSTEM STATUS
+      </div>
+
+      <div class="status-main">
+        ⚡ SYSTEM : ONLINE
+      </div>
+
     </div>
 
-    <div class="status-card" id="status2">
-      ⌬ NETWORK : LIVE
-    </div>
+    <div class="soft-card status-card" id="status2">
 
-    <div class="status-card" id="clockCard">
-      UTC +05:30 • 00:00:00
+      <div class="status-label">
+        NETWORK STATUS
+      </div>
+
+      <div class="status-main">
+        ⌬ NETWORK : LIVE
+      </div>
+
     </div>
 
   </div>
@@ -401,8 +510,8 @@ a=(a+1)%statusA.length;
 b=(b+1)%statusB.length;
 f=(f+1)%feeds.length;
 
-s1.innerHTML=statusA[a];
-s2.innerHTML=statusB[b];
+s1.querySelector(".status-main").innerHTML=statusA[a];
+s2.querySelector(".status-main").innerHTML=statusB[b];
 feed.innerHTML=feeds[f];
 
 hero.classList.add("heroPulse");
