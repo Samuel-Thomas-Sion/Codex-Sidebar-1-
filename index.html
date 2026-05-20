@@ -123,10 +123,30 @@ class Particle {
         this.pulse += 0.03;
 
         /* Respawn */
-        if (this.y < -20) {
-            this.reset();
-            this.y = h + 20;
-        }
+        if (this.y < -30) {
+
+    this.x = Math.random() * w;
+
+    this.y = h + 30;
+
+    this.size = Math.random() * 2.8 + 0.5;
+
+    this.speedY = Math.random() * 1.7 + 0.4;
+
+    this.speedX = (Math.random() - 0.5) * 0.4;
+
+    this.opacity = Math.random() * 0.5 + 0.15;
+
+    const roll = Math.random();
+
+    if (roll > 0.96) {
+        this.color = "255,140,0";
+    } else if (roll > 0.6) {
+        this.color = "140,200,255";
+    } else {
+        this.color = "77,163,255";
+    }
+}
     }
 
     draw() {
