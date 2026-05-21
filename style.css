@@ -859,5 +859,275 @@ iframe{
   box-shadow:
     0 0 10px rgba(77,163,255,.55);
 }
+/* =========================================
+   NEW OPERATIVES SYSTEM
+========================================= */
+
+.new-operatives-system{
+  display:flex;
+
+  flex-direction:column;
+
+  gap:16px;
+}
+
+/* =========================================
+   TOP OPERATIVE
+========================================= */
+
+.top-operative-card{
+  position:relative;
+
+  overflow:hidden;
+
+  padding:22px;
+
+  border-radius:22px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #18314f,
+      #10253d,
+      #0b1624
+    );
+
+  border:1px solid rgba(77,163,255,.18);
+
+  box-shadow:
+    0 0 24px rgba(77,163,255,.10);
+
+  transition:all .28s ease;
+}
+
+.top-operative-card:hover{
+  transform:translateY(-4px);
+
+  border-color:rgba(77,163,255,.45);
+
+  box-shadow:
+    0 0 28px rgba(77,163,255,.25);
+}
+
+/* GLOW */
+
+.top-operative-card::before{
+  content:"";
+
+  position:absolute;
+
+  top:-50px;
+  right:-50px;
+
+  width:140px;
+  height:140px;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(77,163,255,.18),
+      transparent 70%
+    );
+}
+
+/* LABEL */
+
+.newest-label{
+  font-size:11px;
+
+  letter-spacing:2px;
+
+  color:#7fc4ff;
+
+  margin-bottom:10px;
+
+  opacity:.8;
+}
+
+/* NAME */
+
+.newest-name{
+  font-size:28px;
+
+  font-weight:bold;
+
+  color:white;
+
+  margin-bottom:10px;
+
+  text-shadow:
+    0 0 18px rgba(77,163,255,.28);
+}
+
+/* DATE */
+
+.newest-date{
+  font-size:13px;
+
+  opacity:.7;
+
+  margin-bottom:18px;
+}
+
+/* BUTTON */
+
+.newest-btn{
+  display:inline-block;
+
+  padding:12px 18px;
+
+  border-radius:12px;
+
+  text-decoration:none;
+
+  font-weight:bold;
+
+  color:white;
+
+  background:
+    linear-gradient(
+      135deg,
+      #4da3ff,
+      #18314f
+    );
+
+  transition:all .22s ease;
+}
+
+.newest-btn:hover{
+  transform:scale(1.04);
+
+  box-shadow:
+    0 0 18px rgba(77,163,255,.32);
+}
+
+/* =========================================
+   SECONDARY GRID
+========================================= */
+
+.secondary-operatives-grid{
+  display:grid;
+
+  grid-template-columns:
+    repeat(auto-fit,minmax(220px,1fr));
+
+  gap:14px;
+}
+
+/* =========================================
+   SMALL OPERATIVE CARDS
+========================================= */
+
+.secondary-operative{
+  position:relative;
+
+  overflow:hidden;
+
+  padding:16px;
+
+  border-radius:18px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #162a42,
+      #10253d
+    );
+
+  border:1px solid rgba(77,163,255,.10);
+
+  transition:all .24s ease;
+}
+
+.secondary-operative:hover{
+  transform:translateY(-3px);
+
+  border-color:rgba(77,163,255,.35);
+
+  box-shadow:
+    0 0 18px rgba(77,163,255,.18);
+}
+
+.secondary-operative::before{
+  content:"";
+
+  position:absolute;
+
+  top:-30px;
+  right:-30px;
+
+  width:90px;
+  height:90px;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(77,163,255,.10),
+      transparent 70%
+    );
+}
+
+/* SMALL NAME */
+
+.secondary-name{
+  font-size:18px;
+
+  font-weight:bold;
+
+  margin-bottom:8px;
+
+  color:white;
+}
+
+/* SMALL DATE */
+
+.secondary-date{
+  font-size:12px;
+
+  opacity:.65;
+
+  margin-bottom:14px;
+}
+
+/* SMALL BUTTON */
+
+.secondary-btn{
+  display:block;
+
+  text-align:center;
+
+  padding:10px;
+
+  border-radius:10px;
+
+  text-decoration:none;
+
+  font-weight:bold;
+
+  color:#dcecff;
+
+  background:#18314f;
+
+  border:1px solid rgba(77,163,255,.18);
+
+  transition:all .22s ease;
+}
+
+.secondary-btn:hover{
+  transform:scale(1.02);
+
+  box-shadow:
+    0 0 14px rgba(77,163,255,.24);
+}
+
+/* LOADING */
+
+.loading-operatives{
+  text-align:center;
+
+  opacity:.65;
+
+  padding:18px;
+}
 
 }
