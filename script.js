@@ -1,88 +1,95 @@
-const clubUrl = "The-Codex";
+document.addEventListener("DOMContentLoaded", async () => {
 
-const operativesContainer =
-document.getElementById("new-operatives-list");
+  const memberContainer =
+    document.getElementById("new-members-list");
 
-async function loadNewOperatives(){
+  if(!memberContainer) return;
 
   try{
 
     const response = await fetch(
-      `https://api.chess.com/pub/club/${clubUrl}/members`
+      "https://api.chess.com/pub/club/The-Codex/members"
     );
 
     const data = await response.json();
 
-    /* ONLY ALL MEMBERS */
+    const allMembers = data.all_time || [];
 
-    const members = data.all_time;
+    // newest first
+    const newestMembers = allMembers
+      .sort((a,b) => b.joined - a.joined)
+      .slice(0,3);
 
-    /* SORT NEWEST FIRST */
+    memberContainer.innerHTML = "";
 
-    members.sort(
-      (a,b) => b.joined - a.joined
-    );
-
-    /* LATEST 12 */
-
-    const latestMembers =
-      members.slice(0,12);
-
-    operativesContainer.innerHTML = "";
-
-    latestMembers.forEach(member => {
+    newestMembers.forEach(member => {
 
       const joinedDate =
-        new Date(member.joined * 1000);
+        new Date(member.joined * 1000)
+        .toLocaleDateString();
 
-      const formattedDate =
-        joinedDate.toLocaleDateString();
+      const avatar =
+        `https://images.chesscomfiles.com/uploads/v1/user/\
+${member.username}.jpg`;
 
-      operativesContainer.innerHTML += `
+      const card = document.createElement("div");
 
-        <div class="operative-card">
+      card.className = "member-card";
 
-          <div class="operative-name">
-            ${member.username}
+      card.innerHTML = `
+
+        <div class="member-left">
+
+          <div class="member-avatar">
+
+            <img
+              src="https://www.chess.com/bundles/web/images/user-image.007dad08.svg"
+              alt="${member.username}">
+
           </div>
 
-          <div class="operative-date">
-            Joined: ${formattedDate}
+          <div class="member-info">
+
+            <div class="member-name">
+              ${member.username}
+            </div>
+
+            <div class="member-date">
+              Joined ${joinedDate}
+            </div>
+
           </div>
-
-          <a
-            class="operative-btn"
-            href="https://www.chess.com/member/${member.username}"
-            target="_blank">
-
-            OPEN OPERATIVE PROFILE
-
-          </a>
 
         </div>
 
+        <a
+          class="member-profile"
+          href="https://www.chess.com/member/${member.username}"
+          target="_blank">
+
+          PROFILE
+
+        </a>
       `;
+
+      memberContainer.appendChild(card);
 
     });
 
   }
-
   catch(error){
 
-    operativesContainer.innerHTML = `
+    console.error(error);
 
-      <div class="loading-operatives">
+    memberContainer.innerHTML = `
 
-        Failed to sync Chess.com API
+      <div class="member-loading">
+
+        Unable to sync operatives.
 
       </div>
 
     `;
-
-    console.error(error);
-
   }
 
-}
-
-loadNewOperatives();
+});
