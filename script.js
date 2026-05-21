@@ -1,129 +1,58 @@
-javascript
-const operativeContainer =
-  document.getElementById("newOperatives");
 
-async function loadOperatives() {
+// =========================
+// CODEX PULSE SYSTEM
+// =========================
 
-  operativeContainer.innerHTML =
-    `<div class="operative-loading">
-      Syncing newest operatives...
-    </div>`;
+setInterval(() => {
 
-  // =========================================
-  // TRY CHESS.COM SDK FIRST
-  // =========================================
+  document
+    .querySelectorAll(".hover-card")
+    .forEach(card => {
 
-  try {
+      card.style.transform = "translateY(-2px)";
 
-    if(typeof Chesscom !== "undefined"){
+      setTimeout(() => {
+        card.style.transform = "";
+      }, 350);
 
-      Chesscom.getClubMembers(
-        "the-codex",
-        {},
-        function(data){
+    });
 
-          renderOperatives(data);
+}, 10000);
 
-        }
-      );
 
-      return;
+// =========================
+// SCAN FLASH SYSTEM
+// =========================
 
-    }
+setInterval(() => {
 
-  }
+  document
+    .querySelectorAll(".scan-line")
+    .forEach(scan => {
 
-  catch(err){
+      scan.style.opacity = "1";
 
-    console.log("SDK failed:", err);
+      setTimeout(() => {
+        scan.style.opacity = ".4";
+      }, 400);
 
-  }
+    });
 
-  // =========================================
-  // FALLBACK TO FETCH API
-  // =========================================
+}, 5000);
 
-  try {
 
-    const response = await fetch(
-      "https://corsproxy.io/?https://api.chess.com/pub/club/the-codex/members"
-    );
+// =========================
+// TACTICAL HOVER AUDIO READY
+// =========================
 
-    if(!response.ok){
+document
+  .querySelectorAll("a")
+  .forEach(link => {
 
-      throw new Error("Fetch failed");
+    link.addEventListener("mouseenter", () => {
 
-    }
+      // future hover sound system
 
-    const data = await response.json();
+    });
 
-    renderOperatives(data);
-
-  }
-
-  catch(error){
-
-    operativeContainer.innerHTML = `
-      <div class="operative-error">
-        Failed to synchronize operative network.
-      </div>
-    `;
-
-    console.error(error);
-
-  }
-
-}
-
-function renderOperatives(data){
-
-  const allMembers = data.all_time || [];
-
-  const latestMembers =
-    [...allMembers]
-    .sort((a,b) => b.joined - a.joined)
-    .slice(0,3);
-
-  operativeContainer.innerHTML = "";
-
-  latestMembers.forEach(member => {
-
-    const joinedDate =
-      new Date(member.joined * 1000)
-      .toLocaleDateString();
-
-    operativeContainer.innerHTML += `
-
-      <div class="operative-card">
-
-        <div class="operative-top">
-
-          <div>
-            <div class="operative-name">
-              ${member.username}
-            </div>
-
-            <div class="operative-rank">
-              New Operative
-            </div>
-          </div>
-
-          <div class="operative-icon">
-            ⚡
-          </div>
-
-        </div>
-
-        <div class="operative-joined">
-          Joined: ${joinedDate}
-        </div>
-
-      </div>
-
-    `;
-
-  });
-
-}
-
-loadOperatives();
+});
