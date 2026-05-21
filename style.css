@@ -766,5 +766,98 @@ iframe{
   100%{
     left:130%;
   }
+   /* =========================================
+   BLUE SCROLLBAR SYSTEM
+========================================= */
+
+/* Allied Club Network */
+
+.allied-network{
+  max-height:320px;
+
+  overflow-y:auto;
+
+  padding-right:6px;
+
+  scrollbar-width:thin;
+  scrollbar-color:#4da3ff #0f2238;
+}
+
+/* Command Core */
+
+.command-core{
+  max-height:320px;
+
+  overflow-y:auto;
+
+  padding-right:6px;
+
+  scrollbar-width:thin;
+  scrollbar-color:#4da3ff #0f2238;
+}
+
+/* Command Centre */
+
+.command-grid{
+  max-height:320px;
+
+  overflow-y:auto;
+
+  padding-right:6px;
+
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+
+  scrollbar-width:thin;
+  scrollbar-color:#4da3ff #0f2238;
+}
+
+/* =========================================
+   WEBKIT SCROLLBAR
+========================================= */
+
+.allied-network::-webkit-scrollbar,
+.command-core::-webkit-scrollbar,
+.command-grid::-webkit-scrollbar{
+  width:8px;
+}
+
+.allied-network::-webkit-scrollbar-track,
+.command-core::-webkit-scrollbar-track,
+.command-grid::-webkit-scrollbar-track{
+  background:#0b1624;
+
+  border-radius:999px;
+}
+
+.allied-network::-webkit-scrollbar-thumb,
+.command-core::-webkit-scrollbar-thumb,
+.command-grid::-webkit-scrollbar-thumb{
+  background:
+    linear-gradient(
+      180deg,
+      #4da3ff,
+      #18314f
+    );
+
+  border-radius:999px;
+
+  border:1px solid rgba(255,255,255,.08);
+}
+
+.allied-network::-webkit-scrollbar-thumb:hover,
+.command-core::-webkit-scrollbar-thumb:hover,
+.command-grid::-webkit-scrollbar-thumb:hover{
+  background:
+    linear-gradient(
+      180deg,
+      #7fc4ff,
+      #23548a
+    );
+
+  box-shadow:
+    0 0 10px rgba(77,163,255,.55);
+}
 
 }
