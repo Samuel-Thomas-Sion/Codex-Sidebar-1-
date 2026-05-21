@@ -1,17 +1,13 @@
-async function loadNewestMembers() {
+```javascript
+const operativeContainer = document.getElementById("operative-list");
 
-  const container =
-    document.getElementById("new-members-list");
+async function loadOperatives() {
 
   try {
 
     const response = await fetch(
       "https://api.chess.com/pub/club/the-codex/members"
     );
-
-    if(!response.ok){
-      throw new Error("API failed");
-    }
 
     const data = await response.json();
 
@@ -21,89 +17,89 @@ async function loadNewestMembers() {
       ...data.all_time
     ];
 
-    /* REMOVE DUPLICATES */
+    // Remove duplicates
+    const uniqueMembers = [];
 
-    const uniqueMembers =
-      Array.from(
-        new Map(
-          allMembers.map(member =>
-            [member.username, member]
-          )
-        ).values()
-      );
+    const usernames = new Set();
 
-    /* SORT NEWEST FIRST */
+    allMembers.forEach(member => {
 
-    uniqueMembers.sort(
-      (a,b) => b.joined - a.joined
-    );
+      if (!usernames.has(member.username)) {
 
-    /* TOP 3 */
+        usernames.add(member.username);
 
-    const newest =
-      uniqueMembers.slice(0,3);
+        uniqueMembers.push(member);
 
-    container.innerHTML = "";
+      }
 
-    newest.forEach((member,index)=>{
+    });
 
-      const joinedDate =
-        new Date(member.joined * 1000)
-        .toLocaleDateString();
+    // Sort newest first
+    uniqueMembers.sort((a, b) => b.joined - a.joined);
 
-      container.innerHTML += `
+    // Take top 3 newest
+    const newest = uniqueMembers.slice(0, 3);
 
-        <div class="member-card">
+    operativeContainer.innerHTML = "";
 
-          <div class="member-top">
+    newest.forEach(member => {
 
-            <div class="member-name">
-              ${member.username}
+      const joinDate = new Date(
+        member.joined * 1000
+      ).toLocaleDateString();
+
+      operativeContainer.innerHTML += `
+        <div class="operative-card">
+
+          <div class="operative-top">
+
+            <div class="operative-avatar">
+              ⚡
             </div>
 
-            <div class="member-badge">
-              #${index + 1}
+            <div>
+
+              <div class="operative-name">
+                ${member.username}
+              </div>
+
+              <div class="operative-date">
+                Joined ${joinDate}
+              </div>
+
             </div>
 
-          </div>
-
-          <div class="member-joined">
-            Joined: ${joinedDate}
           </div>
 
           <a
-            class="member-btn"
+            class="operative-btn"
             href="https://www.chess.com/member/${member.username}"
-            target="_blank">
-
-            VIEW OPERATIVE
-
+            target="_blank"
+          >
+            VIEW PROFILE
           </a>
 
         </div>
-
       `;
 
     });
 
   }
 
-  catch(error){
+  catch(error) {
 
     console.error(error);
 
-    container.innerHTML = `
-
-      <div class="member-error">
-
+    operativeContainer.innerHTML = `
+      <div class="operative-error">
         Failed to sync operative database.
-
       </div>
-
     `;
 
   }
 
 }
 
-loadNewestMembers();
+loadOperatives();
+```
+
