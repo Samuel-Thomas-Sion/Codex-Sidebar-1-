@@ -35,25 +35,227 @@
       <div class="scan-line"></div>
     </div>
     
-<!-- NEW OPERATIVES -->
+<!-- =========================
+     NEWEST OPERATIVES MODULE
+========================= -->
 
 <div class="codex-module">
 
-  <h3 class="section-title">
-    🛰️ NEW OPERATIVES
-  </h3>
+  <div class="members-header">
+    <div class="members-icon">🧠</div>
 
-  <div id="operative-list">
+    <div>
+      <div class="section-title">
+        NEW OPERATIVES
+      </div>
 
-    <div class="operative-loading">
-      Syncing newest operatives...
+      <div class="members-sub">
+        Latest recruits entering The Codex
+      </div>
+    </div>
+  </div>
+
+  <div id="codex-members-list">
+
+    <!-- Loading Row -->
+    <div class="member-row">
+      <div class="member-avatar loading-avatar"></div>
+
+      <div class="member-info">
+        <div class="member-name">
+          Syncing operative database...
+        </div>
+
+        <div class="member-joined">
+          Establishing secure uplink
+        </div>
+      </div>
     </div>
 
   </div>
 
-     <div class="divider">
-      <div class="scan-line"></div>
-    </div>
+</div>
+
+<script>
+async function loadNewestOperatives() {
+
+  const list = document.getElementById(
+    "codex-members-list"
+  );
+
+  try {
+
+    /* FETCH CLUB MEMBERS */
+    const response = await fetch(
+      "https://api.chess.com/pub/club/the-codex/members"
+    );
+
+    if(!response.ok){
+      throw new Error("Club API failed");
+    }
+
+    const data = await response.json();
+
+    /* COMBINE ALL MEMBERS */
+    const members = [
+      ...(data.weekly || []),
+      ...(data.monthly || []),
+      ...(data.all_time || [])
+    ];
+
+    /* REMOVE DUPLICATES */
+    const uniqueMap = new Map();
+
+    members.forEach(member => {
+
+      if(
+        !uniqueMap.has(member.username)
+      ){
+        uniqueMap.set(
+          member.username,
+          member
+        );
+      }
+
+    });
+
+    const uniqueMembers =
+      Array.from(uniqueMap.values());
+
+    /* SORT NEWEST FIRST */
+    uniqueMembers.sort(
+      (a,b) => b.joined - a.joined
+    );
+
+    /* TOP 3 */
+    const newest =
+      uniqueMembers.slice(0,3);
+
+    /* FETCH PLAYER DATA */
+    const fullData =
+      await Promise.all(
+
+        newest.map(async member => {
+
+          try{
+
+            const playerRes =
+              await fetch(
+                `https://api.chess.com/pub/player/${member.username}`
+              );
+
+            const player =
+              await playerRes.json();
+
+            return {
+
+              username:
+                member.username,
+
+              joined:
+                member.joined,
+
+              avatar:
+                player.avatar ||
+                "https://images.chesscomfiles.com/uploads/v1/user/default.8bc7b.png"
+
+            };
+
+          }
+
+          catch{
+
+            return {
+
+              username:
+                member.username,
+
+              joined:
+                member.joined,
+
+              avatar:
+                "https://images.chesscomfiles.com/uploads/v1/user/default.8bc7b.png"
+
+            };
+
+          }
+
+        })
+
+      );
+
+    /* BUILD HTML */
+    list.innerHTML = fullData.map(member => {
+
+      const joinedDate =
+        new Date(
+          member.joined * 1000
+        );
+
+      const formatted =
+        joinedDate.toLocaleDateString(
+          "en-US",
+          {
+            month:"short",
+            day:"numeric"
+          }
+        );
+
+      return `
+
+      <a
+        class="member-row"
+        href="https://www.chess.com/member/${member.username}"
+        target="_blank"
+      >
+
+        <img
+          class="member-avatar"
+          src="${member.avatar}"
+          alt="${member.username}"
+        >
+
+        <div class="member-info">
+
+          <div class="member-name">
+            @${member.username}
+          </div>
+
+          <div class="member-joined">
+            Joined ${formatted}
+          </div>
+
+        </div>
+
+      </a>
+
+      `;
+
+    }).join("");
+
+  }
+
+  catch(error){
+
+    console.error(error);
+
+    list.innerHTML = `
+
+      <div class="member-error">
+        Unable to sync operative database.
+      </div>
+
+    `;
+
+  }
+
+}
+
+window.addEventListener(
+  "DOMContentLoaded",
+  loadNewestOperatives
+);
+</script>
 
     <!-- DIRECTIVE -->
     <section class="module hover-card">
