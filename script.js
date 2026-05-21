@@ -1,4 +1,4 @@
-const clubUrl = "protectors-of-the-codex";
+const clubUrl = "The-Codex";
 
 const operativesContainer =
 document.getElementById("new-operatives-list");
@@ -13,42 +13,20 @@ async function loadNewOperatives(){
 
     const data = await response.json();
 
-    /* COMBINE MEMBERS */
+    /* ONLY ALL MEMBERS */
 
-    const members = [
-      ...data.weekly,
-      ...data.monthly,
-      ...data.all_time
-    ];
+    const members = data.all_time;
 
-    /* REMOVE DUPLICATES */
+    /* SORT NEWEST FIRST */
 
-    const uniqueMembers = [];
-
-    const usernames = new Set();
-
-    members.forEach(member => {
-
-      if(!usernames.has(member.username)){
-
-        usernames.add(member.username);
-
-        uniqueMembers.push(member);
-
-      }
-
-    });
-
-    /* SORT NEWEST */
-
-    uniqueMembers.sort(
+    members.sort(
       (a,b) => b.joined - a.joined
     );
 
-    /* TAKE LATEST 12 */
+    /* LATEST 12 */
 
     const latestMembers =
-      uniqueMembers.slice(0,12);
+      members.slice(0,12);
 
     operativesContainer.innerHTML = "";
 
