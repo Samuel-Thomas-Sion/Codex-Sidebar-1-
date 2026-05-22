@@ -96,7 +96,6 @@
         0 0 0 1px rgba(255, 255, 255, 0.04) inset,
         0 0 26px rgba(25, 230, 255, 0.14),
         0 0 36px rgba(255, 106, 26, 0.06);
-      animation: shellSignal 6s ease-in-out infinite;
     }
 
     @keyframes shellSignal {
@@ -176,7 +175,7 @@
       position: absolute;
       right: -16%;
       left: -16%;
-      height: 88px;
+      height: 52px;
       top: -110px;
       opacity: 0;
       will-change: transform, opacity;
@@ -192,7 +191,10 @@
       box-shadow:
         0 0 26px rgba(25, 230, 255, 0.34),
         0 0 42px rgba(255, 106, 26, 0.12);
-      animation: scanRefresh 5s linear infinite;
+    }
+
+    .scan-refresh.is-scanning::before {
+      animation: scanRefresh 720ms ease-out;
     }
 
     @keyframes scanRefresh {
@@ -201,15 +203,15 @@
         transform: translate3d(0, -120px, 0);
       }
 
-      8% {
+      3% {
         opacity: 1;
       }
 
-      36% {
+      10% {
         opacity: 0.82;
       }
 
-      52%,
+      16%,
       100% {
         opacity: 0;
         transform: translate3d(0, var(--scan-travel), 0);
@@ -260,7 +262,6 @@
       height: 1px;
       opacity: 0.75;
       background: linear-gradient(90deg, transparent, var(--cyan), var(--orange), transparent);
-      animation: moduleSweep 8s ease-in-out infinite;
     }
 
     @keyframes moduleSweep {
@@ -372,7 +373,6 @@
       border-radius: 50%;
       background: var(--ok);
       box-shadow: 0 0 10px var(--ok);
-      animation: livePulse 1.8s ease-in-out infinite;
     }
 
     @keyframes livePulse {
@@ -685,7 +685,6 @@
           rgba(255, 106, 26, 0.14),
           transparent
         );
-      animation: codexGlow 7s ease-in-out infinite;
     }
 
     @keyframes codexGlow {
@@ -734,7 +733,6 @@
       box-shadow:
         0 0 34px rgba(25, 230, 255, 0.25),
         inset 0 0 24px rgba(25, 230, 255, 0.1);
-      animation: holoFloat 4.8s ease-in-out infinite;
     }
 
     .hero-mark::before {
@@ -750,7 +748,7 @@
           rgba(255, 106, 26, 0.28),
           transparent
         );
-      animation: holoSpin 5.2s linear infinite;
+      opacity: 0.65;
     }
 
     @keyframes holoFloat {
@@ -1453,28 +1451,28 @@
 
       <div class="card-list" id="newestMembers">
         <div class="member-card">
-          <div class="avatar">C1</div>
+          <div class="avatar">API</div>
           <div>
-            <div class="name">Codex_Recruit</div>
-            <div class="meta">Best rating: 1800 - Joined recently</div>
+            <div class="name">Syncing latest recruits</div>
+            <div class="meta">Reading Chess.com club joined timestamps...</div>
           </div>
           <span class="badge blue">New</span>
         </div>
 
         <div class="member-card">
-          <div class="avatar">NX</div>
+          <div class="avatar">HUD</div>
           <div>
-            <div class="name">Neon_X</div>
-            <div class="meta">Best rating: 1725 - Joined recently</div>
+            <div class="name">Sorting by join time</div>
+            <div class="meta">Newest operatives appear here automatically.</div>
           </div>
           <span class="badge blue">New</span>
         </div>
 
         <div class="member-card">
-          <div class="avatar">IF</div>
+          <div class="avatar">OPS</div>
           <div>
-            <div class="name">Inferno_File</div>
-            <div class="meta">Best rating: 1650 - Joined recently</div>
+            <div class="name">Fallback protected</div>
+            <div class="meta">This module never renders blank.</div>
           </div>
           <span class="badge blue">New</span>
         </div>
@@ -1729,31 +1727,24 @@
 
         command: [
           { role: "Founder", user: "Codex_S1", badge: "Founder" },
-          { role: "Super Admin", user: "Inferno_Command", badge: "S-Admin" },
-          { role: "Super Admin", user: "Trial_Architect", badge: "S-Admin" },
-          { role: "Admin", user: "Tactical_Nova", badge: "Admin" },
-          { role: "Admin", user: "Recruit_Lead", badge: "Admin" }
+          { role: "CEO", user: "Codex_Vs", badge: "CEO" },
+          { role: "Club Blogger", user: "SweetDevil095", profileUser: "Sweet_Devil095", badge: "Blogger" }
         ],
 
         partners: [
-          { name: "Inferno League", tag: "IF", url: "https://www.chess.com/clubs" },
-          { name: "Tactical Masters", tag: "TM", url: "https://www.chess.com/clubs" },
-          { name: "Endgame Union", tag: "EU", url: "https://www.chess.com/clubs" },
-          { name: "Neon Boardroom", tag: "NB", url: "https://www.chess.com/clubs" }
+          { name: "Checkmate Theory", tag: "CT", url: "https://www.chess.com/club/checkmate-theory" },
+          { name: "Gukesh Fan Base", tag: "GF", url: "https://www.chess.com/club/gukesh-fanbase" }
         ],
 
         titled: [
-          { title: "GM", user: "Classified GM", rating: "Command board" },
-          { title: "IM", user: "Classified IM", rating: "Analysis wing" },
-          { title: "WGM", user: "Classified WGM", rating: "Elite circuit" },
-          { title: "FM", user: "Classified FM", rating: "Trial council" },
-          { title: "NM", user: "Classified NM", rating: "Arena unit" }
+          { title: "IM", user: "KHVICHA_SUPTASHVILLI", rating: "International Master" },
+          { title: "FM", user: "TRIMITZIOSP7", rating: "FIDE Master" }
         ],
 
         fallbackMembers: [
-          { username: "Codex_Recruit", best: 1800, joined: "recently" },
-          { username: "Neon_X", best: 1725, joined: "recently" },
-          { username: "Inferno_File", best: 1650, joined: "recently" }
+          { username: "API reconnecting", best: "N/A", joined: "waiting for club members endpoint" },
+          { username: "Latest recruits load automatically", best: "N/A", joined: "from Chess.com joined timestamps" },
+          { username: "No blank modules", best: "N/A", joined: "fallback display active" }
         ],
 
         fallbackLive: [
@@ -1845,6 +1836,54 @@
         }
       }
 
+      function fetchJsonp(url, timeoutMs) {
+        return new Promise(function (resolve, reject) {
+          var callbackName = "codexJsonp" + Date.now() + Math.floor(Math.random() * 10000);
+          var script = document.createElement("script");
+          var timer = setTimeout(function () {
+            cleanup();
+            reject(new Error("JSONP timeout"));
+          }, timeoutMs || 6500);
+
+          function cleanup() {
+            clearTimeout(timer);
+
+            try {
+              delete window[callbackName];
+            } catch (error) {
+              window[callbackName] = undefined;
+            }
+
+            if (script.parentNode) {
+              script.parentNode.removeChild(script);
+            }
+          }
+
+          window[callbackName] = function (data) {
+            cleanup();
+            resolve(data);
+          };
+
+          script.onerror = function () {
+            cleanup();
+            reject(new Error("JSONP failed"));
+          };
+
+          script.src = url + (url.indexOf("?") === -1 ? "?" : "&") + "callback=" + callbackName;
+          document.head.appendChild(script);
+        });
+      }
+
+      async function fetchClubMembers() {
+        var url = API + "/club/" + CLUB_SLUG + "/members";
+
+        try {
+          return await fetchJson(url, 7500);
+        } catch (error) {
+          return await fetchJsonp(url, 7500);
+        }
+      }
+
 
       /* Member count and newest members */
 
@@ -1912,66 +1951,94 @@
         return months + " months ago";
       }
 
+      function memberJoinedTimestamp(member) {
+        return Number(
+          member && (
+            member.joined ||
+            member.joined_at ||
+            member.club_joined ||
+            member.club_joined_at ||
+            member.date_joined
+          )
+        ) || 0;
+      }
+
+      function collectNewestClubMembers(membersData) {
+        var byUsername = {};
+
+        ["weekly", "monthly", "all_time"].forEach(function (key) {
+          if (!Array.isArray(membersData[key])) {
+            return;
+          }
+
+          membersData[key].forEach(function (member) {
+            var username = member && member.username;
+            var id = username && username.toLowerCase();
+            var joined = memberJoinedTimestamp(member);
+
+            if (!id) {
+              return;
+            }
+
+            if (!byUsername[id] || joined > byUsername[id].joined) {
+              byUsername[id] = {
+                username: username,
+                joined: joined
+              };
+            }
+          });
+        });
+
+        return Object.keys(byUsername).map(function (id) {
+          return byUsername[id];
+        }).sort(function (a, b) {
+          return (b.joined || 0) - (a.joined || 0);
+        });
+      }
+
       function renderFallbackMembers() {
         $("newestMembers").innerHTML = config.fallbackMembers.map(function (member) {
           return ''
-            + '<a class="member-card" href="' + profileUrl(member.username) + '" target="_blank" rel="noopener">'
+            + '<div class="member-card">'
             + avatarHtml(member.username, "")
             + '<div>'
             + '<div class="name">' + esc(member.username) + '</div>'
             + '<div class="meta">Best rating: ' + esc(member.best) + ' - Joined ' + esc(member.joined) + '</div>'
             + '</div>'
-            + '<span class="badge blue">New</span>'
-            + '</a>';
+            + '<span class="badge blue">API</span>'
+            + '</div>';
         }).join("");
       }
 
       async function loadClubData() {
         try {
           var clubPromise = fetchJson(API + "/club/" + CLUB_SLUG);
-          var membersPromise = fetchJson(API + "/club/" + CLUB_SLUG + "/members");
+          var membersPromise = fetchClubMembers();
           var results = await Promise.allSettled([clubPromise, membersPromise]);
 
           var club = results[0].status === "fulfilled" ? results[0].value : {};
           var membersData = results[1].status === "fulfilled" ? results[1].value : {};
-          var allMembers = [];
-
-          ["weekly", "monthly", "all_time"].forEach(function (key) {
-            if (Array.isArray(membersData[key])) {
-              allMembers = allMembers.concat(membersData[key]);
-            }
-          });
-
-          var seen = {};
-
-          allMembers = allMembers.filter(function (member) {
-            var username = (member && member.username || "").toLowerCase();
-
-            if (!username || seen[username]) {
-              return false;
-            }
-
-            seen[username] = true;
-            return true;
-          });
+          var membersSynced = results[1].status === "fulfilled";
+          var allMembers = collectNewestClubMembers(membersData);
 
           var count = club.members_count || club.member_count || allMembers.length || config.memberFallback;
 
           $("memberCount").textContent = formatNumber(count);
           $("memberCount").classList.remove("loading");
-          $("memberMeta").textContent = "Chess.com telemetry synced at " + syncTime();
-          $("memberSync").textContent = "Synced";
 
           if (!allMembers.length) {
+            $("memberMeta").textContent = membersSynced
+              ? "Club count synced; no joined timestamps returned."
+              : "Club count synced; members endpoint reconnecting.";
+            $("memberSync").textContent = membersSynced ? "No joins" : "Partial";
             renderFallbackMembers();
             return;
           }
 
-          var newestMembers = allMembers
-            .sort(function (a, b) {
-              return (b.joined || 0) - (a.joined || 0);
-            })
-            .slice(0, 3);
+          $("memberMeta").textContent = "Latest club joins synced at " + syncTime();
+          $("memberSync").textContent = "Synced";
+
+          var newestMembers = allMembers.slice(0, 3);
 
           var enrichedMembers = await Promise.all(newestMembers.map(async function (member) {
             var output = {
@@ -2105,7 +2172,7 @@
       function renderStaticModules() {
         $("commandCentre").innerHTML = config.command.map(function (profile) {
           return ''
-            + '<a class="role-card" href="' + profileUrl(profile.user) + '" target="_blank" rel="noopener">'
+            + '<a class="role-card" href="' + profileUrl(profile.profileUser || profile.user) + '" target="_blank" rel="noopener">'
             + avatarHtml(profile.user, "")
             + '<div>'
             + '<div class="badge blue">' + esc(profile.badge) + '</div>'
@@ -2599,22 +2666,51 @@
 
       function setupScanlineTravel() {
         var shell = $("codexApp");
+        var scanline = document.querySelector(".scan-refresh");
+        var scanTimer = null;
 
         function updateTravel() {
           shell.style.setProperty("--scan-travel", (shell.scrollHeight + 180) + "px");
         }
 
+        function runScan() {
+          if (!scanline || document.hidden) {
+            return;
+          }
+
+          scanline.classList.remove("is-scanning");
+
+          requestAnimationFrame(function () {
+            scanline.classList.add("is-scanning");
+          });
+        }
+
         updateTravel();
+        runScan();
 
         if (window.ResizeObserver) {
           new ResizeObserver(updateTravel).observe(shell);
         } else {
           window.addEventListener("resize", updateTravel);
         }
+
+        scanTimer = setInterval(runScan, 5000);
+
+        if (scanline) {
+          scanline.addEventListener("animationend", function () {
+            scanline.classList.remove("is-scanning");
+          });
+        }
+
+        window.addEventListener("pagehide", function () {
+          if (scanTimer) {
+            clearInterval(scanTimer);
+          }
+        });
       }
 
 
-      /* Lightweight particle engine */
+      /* Static particle backdrop */
 
       function setupParticleEngine() {
         var shell = $("codexApp");
@@ -2626,127 +2722,79 @@
         }
 
         var context = canvas.getContext("2d");
-        var particles = [];
-        var dpr = 1;
         var width = 1;
         var height = 1;
-        var frameId = null;
-        var lastTime = performance.now();
-        var frameInterval = 1000 / 24;
-        var visible = true;
 
         function random(min, max) {
           return min + Math.random() * (max - min);
         }
 
-        function resizeCanvas() {
+        function drawStaticParticles() {
           var rect = shell.getBoundingClientRect();
           var viewportHeight = window.innerHeight || 720;
+          var particles = [];
+          var targetCount;
+          var index;
 
           width = Math.max(1, rect.width);
-          height = Math.max(420, Math.min(rect.height, viewportHeight * 1.25, 920));
-          dpr = 1;
+          height = Math.max(360, Math.min(rect.height, viewportHeight * 0.95, 700));
+          targetCount = Math.max(10, Math.min(18, Math.round((width * height) / 26000)));
 
-          canvas.width = Math.floor(width * dpr);
-          canvas.height = Math.floor(height * dpr);
+          canvas.width = Math.floor(width);
+          canvas.height = Math.floor(height);
           canvas.style.width = width + "px";
           canvas.style.height = height + "px";
 
-          context.setTransform(dpr, 0, 0, dpr, 0, 0);
-
-          createParticles();
-        }
-
-        function createParticles() {
-          var targetCount = Math.max(12, Math.min(24, Math.round((width * height) / 18000)));
-
-          particles = Array.from({ length: targetCount }, function (_, index) {
-            var orange = index % 7 === 0;
+          particles = Array.from({ length: targetCount }, function (_, particleIndex) {
+            var orange = particleIndex % 7 === 0;
 
             return {
               x: random(0, width),
               y: random(0, height),
-              vx: random(-0.055, 0.055),
-              vy: random(-0.075, 0.035),
               radius: random(0.85, 1.9),
               alpha: random(0.22, 0.66),
-              pulse: random(0, Math.PI * 2),
-              color: orange ? "255, 106, 26" : "25, 230, 255"
+              color: orange ? "255, 106, 26" : "25, 230, 255",
+              link: particleIndex % 4 === 0
             };
           });
-        }
-
-        function render(time) {
-          if (!visible) {
-            frameId = requestAnimationFrame(render);
-            return;
-          }
-
-          if (time - lastTime < frameInterval) {
-            frameId = requestAnimationFrame(render);
-            return;
-          }
-
-          var delta = Math.min(64, time - lastTime);
-
-          lastTime = time;
 
           context.clearRect(0, 0, width, height);
           context.globalCompositeOperation = "lighter";
+          context.lineWidth = 1;
 
-          particles.forEach(function (particle, index) {
-            particle.x += particle.vx * delta;
-            particle.y += particle.vy * delta;
-            particle.pulse += 0.018 * delta;
-
-            if (particle.x < -8) {
-              particle.x = width + 8;
-            } else if (particle.x > width + 8) {
-              particle.x = -8;
-            }
-
-            if (particle.y < -8) {
-              particle.y = height + 8;
-            } else if (particle.y > height + 8) {
-              particle.y = -8;
-            }
-
-            var glow = particle.alpha + Math.sin(particle.pulse) * 0.18;
-
-            context.fillStyle = "rgba(" + particle.color + ", " + Math.max(0.08, glow) + ")";
+          particles.forEach(function (particle) {
+            context.fillStyle = "rgba(" + particle.color + ", " + particle.alpha + ")";
             context.shadowColor = "rgba(" + particle.color + ", 0.9)";
-            context.shadowBlur = 10;
+            context.shadowBlur = 7;
             context.beginPath();
             context.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
             context.fill();
           });
 
+          for (index = 0; index < particles.length - 1; index += 4) {
+            if (!particles[index].link) {
+              continue;
+            }
+
+            context.shadowBlur = 0;
+            context.strokeStyle = "rgba(25, 230, 255, 0.08)";
+            context.beginPath();
+            context.moveTo(particles[index].x, particles[index].y);
+            context.lineTo(particles[index + 1].x, particles[index + 1].y);
+            context.stroke();
+          }
+
           context.globalCompositeOperation = "source-over";
           context.shadowBlur = 0;
-
-          frameId = requestAnimationFrame(render);
         }
 
-        resizeCanvas();
+        drawStaticParticles();
 
         if (window.ResizeObserver) {
-          new ResizeObserver(resizeCanvas).observe(shell);
+          new ResizeObserver(drawStaticParticles).observe(shell);
         } else {
-          window.addEventListener("resize", resizeCanvas);
+          window.addEventListener("resize", drawStaticParticles);
         }
-
-        document.addEventListener("visibilitychange", function () {
-          visible = !document.hidden;
-          lastTime = performance.now();
-        });
-
-        frameId = requestAnimationFrame(render);
-
-        window.addEventListener("pagehide", function () {
-          if (frameId) {
-            cancelAnimationFrame(frameId);
-          }
-        });
       }
 
 
