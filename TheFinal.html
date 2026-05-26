@@ -877,6 +877,10 @@
         box-shadow 0.2s ease;
     }
 
+    .queue-item {
+      cursor: pointer;
+    }
+
     .member-card::before,
     .event-card::before,
     .role-card::before,
@@ -2336,9 +2340,66 @@
       /* Music player */
 
       var tracks = [
-        { title: "Codex Pulse", mode: "synth", freq: 82, duration: 96 },
-        { title: "Inferno Line", mode: "synth", freq: 110, duration: 88 },
-        { title: "Endgame Radar", mode: "synth", freq: 146, duration: 104 }
+        {
+          title: "Sam Tinnesz - Legends are made",
+          mode: "url",
+          url: "audio/01-legends-are-made.mp3",
+          duration: 240
+        },
+        {
+          title: "The Score - Top of the World",
+          mode: "url",
+          url: "audio/02-top-of-the-world.mp3",
+          duration: 240
+        },
+        {
+          title: "The Score - Who Am I",
+          mode: "url",
+          url: "audio/03-who-am-i.mp3",
+          duration: 240
+        },
+        {
+          title: "Alan Walker - Ignite",
+          mode: "url",
+          url: "audio/04-ignite.mp3",
+          duration: 240
+        },
+        {
+          title: "Oh the larceny - Light that Fire",
+          mode: "url",
+          url: "audio/05-light-that-fire.mp3",
+          duration: 240
+        },
+        {
+          title: "Alan walker - Running out of roses",
+          mode: "url",
+          url: "audio/06-running-out-of-roses.mp3",
+          duration: 240
+        },
+        {
+          title: "The Score - Money Run Low",
+          mode: "url",
+          url: "audio/07-money-run-low.mp3",
+          duration: 240
+        },
+        {
+          title: "Sam Tinnesz - Wolves feat Silverberg",
+          mode: "url",
+          url: "audio/08-wolves-feat-silverberg.mp3",
+          duration: 240
+        },
+        {
+          title: "Zayde Wolf - Gladiator",
+          mode: "url",
+          url: "audio/09-gladiator.mp3",
+          duration: 240
+        },
+        {
+          title: "Tomme Profitt - Only One King",
+          mode: "url",
+          url: "audio/10-only-one-king.mp3",
+          duration: 240
+        }
       ];
 
       var currentTrack = 0;
@@ -2377,7 +2438,7 @@
         $("queueList").innerHTML = visibleTracks.map(function (item) {
           var activeClass = item.index === currentTrack ? "active" : "";
           var duration = Math.floor(item.track.duration / 60) + ":" + String(item.track.duration % 60).padStart(2, "0");
-          var type = item.track.url ? "External audio URL" : "Procedural tactical signal";
+          var type = item.track.url ? "Local MP3 file" : "Procedural tactical signal";
 
           return ''
             + '<div class="queue-item ' + activeClass + '" data-track="' + item.index + '">'
@@ -2549,6 +2610,20 @@
           if (gain) {
             gain.gain.value = Number(this.value) * 0.16;
           }
+        });
+
+        audio.addEventListener("ended", nextTrack);
+        audio.addEventListener("loadedmetadata", function () {
+          var track = tracks[currentTrack];
+          if (audio.duration && !isNaN(audio.duration) && Math.abs(audio.duration - track.duration) > 1) {
+            track.duration = Math.round(audio.duration);
+            renderQueue($("songSearch").value);
+            updateProgress();
+          }
+        });
+        audio.addEventListener("error", function () {
+          console.warn("Audio track failed to load:", tracks[currentTrack] && tracks[currentTrack].title);
+          stopTrack(true);
         });
 
         $("songSearch").addEventListener("input", function () {
