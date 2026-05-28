@@ -1515,52 +1515,68 @@
 
 
     <!-- 5. MUSIC PLAYER MODULE -->
-    <section class="module" id="musicModule">
-      <div class="section-head">
-        <div>
-          <div class="kicker">Music Player Module</div>
-          <h2 class="module-title">Neon Signal Player</h2>
-        </div>
+    <div style="
+background:linear-gradient(135deg,#050b12,#0b1624);
+padding:28px;
+border-radius:24px;
+border:1px solid rgba(0,191,255,0.18);
+text-align:center;
+font-family:Arial,sans-serif;
+box-shadow:
+0 0 24px rgba(0,191,255,0.12),
+inset 0 0 24px rgba(255,255,255,0.02);
+overflow:hidden;
+position:relative;
+">
 
-        <span class="badge blue" id="trackClock">00:00</span>
-      </div>
+<div style="
+position:absolute;
+top:-40px;
+right:-40px;
+width:140px;
+height:140px;
+background:radial-gradient(circle, rgba(0,191,255,0.14), transparent 70%);
+border-radius:50%;
+"></div>
 
-      <div class="player-panel">
-        <div class="now-playing">
-          <div class="micro">Now transmitting</div>
-          <div class="name" id="trackTitle">Codex Pulse</div>
+<div style="
+font-size:32px;
+font-weight:bold;
+letter-spacing:2px;
+color:#8fe9ff;
+text-shadow:
+0 0 12px rgba(0,191,255,0.55),
+0 0 30px rgba(0,191,255,0.18);
+margin-bottom:14px;
+">
+🎵 MUSIC PLAYER
+</div>
 
-          <div class="visualizer">
-            <i></i>
-            <i></i>
-            <i></i>
-            <i></i>
-            <i></i>
-          </div>
+<div style="
+display:inline-block;
+padding:12px 22px;
+border-radius:999px;
+background:rgba(255,140,0,0.08);
+border:1px solid rgba(255,140,0,0.18);
+color:#ffcb8a;
+font-size:15px;
+font-weight:bold;
+letter-spacing:1px;
+box-shadow:0 0 18px rgba(255,140,0,0.10);
+">
+⚠️ UNDER CONSTRUCTION
+</div>
 
-          <div class="progress">
-            <span id="progressBar"></span>
-          </div>
-        </div>
+<div style="
+margin-top:18px;
+font-size:14px;
+color:#9bb6c9;
+letter-spacing:1px;
+">
+Codex Audio Systems currently in development...
+</div>
 
-        <div class="controls">
-          <button class="icon-btn" id="prevTrack" title="Previous">PREV</button>
-          <button class="icon-btn" id="playTrack" title="Play">PLAY</button>
-          <button class="icon-btn" id="nextTrack" title="Next">NEXT</button>
-          <input class="range" id="volumeControl" type="range" min="0" max="1" step="0.01" value="0.55" title="Volume">
-        </div>
-
-        <div class="two-col">
-          <input class="input" id="songSearch" placeholder="Search or add signal">
-          <button class="btn" id="addSong" type="button">Add</button>
-        </div>
-
-        <div class="card-list scroll-zone" id="queueList"></div>
-      </div>
-
-      <audio id="codexAudio" preload="metadata"></audio>
-    </section>
-
+</div>
 
     <!-- 6. EVENTS MODULE -->
     <section class="module">
@@ -2339,320 +2355,7 @@
 
       /* Music player */
 
-      var tracks = [
-        {
-          title: "Sam Tinnesz - Legends are made",
-          mode: "url",
-          url: "audio/01-legends-are-made.mp3",
-          duration: 240
-        },
-        {
-          title: "The Score - Top of the World",
-          mode: "url",
-          url: "audio/02-top-of-the-world.mp3",
-          duration: 240
-        },
-        {
-          title: "The Score - Who Am I",
-          mode: "url",
-          url: "audio/03-who-am-i.mp3",
-          duration: 240
-        },
-        {
-          title: "Alan Walker - Ignite",
-          mode: "url",
-          url: "audio/04-ignite.mp3",
-          duration: 240
-        },
-        {
-          title: "Oh the larceny - Light that Fire",
-          mode: "url",
-          url: "audio/05-light-that-fire.mp3",
-          duration: 240
-        },
-        {
-          title: "Alan walker - Running out of roses",
-          mode: "url",
-          url: "audio/06-running-out-of-roses.mp3",
-          duration: 240
-        },
-        {
-          title: "The Score - Money Run Low",
-          mode: "url",
-          url: "audio/07-money-run-low.mp3",
-          duration: 240
-        },
-        {
-          title: "Sam Tinnesz - Wolves feat Silverberg",
-          mode: "url",
-          url: "audio/08-wolves-feat-silverberg.mp3",
-          duration: 240
-        },
-        {
-          title: "Zayde Wolf - Gladiator",
-          mode: "url",
-          url: "audio/09-gladiator.mp3",
-          duration: 240
-        },
-        {
-          title: "Tomme Profitt - Only One King",
-          mode: "url",
-          url: "audio/10-only-one-king.mp3",
-          duration: 240
-        }
-      ];
-
-      var currentTrack = 0;
-      var playing = false;
-      var startedAt = 0;
-      var elapsed = 0;
-      var timer = null;
-      var audioContext = null;
-      var oscillator = null;
-      var gain = null;
-      var audio = $("codexAudio");
-
-      function renderQueue(filter) {
-        var search = String(filter || "").toLowerCase();
-
-        var visibleTracks = tracks
-          .map(function (track, index) {
-            return {
-              track: track,
-              index: index
-            };
-          })
-          .filter(function (item) {
-            return !search || item.track.title.toLowerCase().indexOf(search) > -1;
-          });
-
-        if (!visibleTracks.length) {
-          visibleTracks = tracks.map(function (track, index) {
-            return {
-              track: track,
-              index: index
-            };
-          });
-        }
-
-        $("queueList").innerHTML = visibleTracks.map(function (item) {
-          var activeClass = item.index === currentTrack ? "active" : "";
-          var duration = Math.floor(item.track.duration / 60) + ":" + String(item.track.duration % 60).padStart(2, "0");
-          var type = item.track.url ? "Local MP3 file" : "Procedural tactical signal";
-
-          return ''
-            + '<div class="queue-item ' + activeClass + '" data-track="' + item.index + '">'
-            + '<div>'
-            + '<div class="name">' + esc(item.track.title) + '</div>'
-            + '<div class="meta">' + type + '</div>'
-            + '</div>'
-            + '<span class="badge blue">' + duration + '</span>'
-            + '</div>';
-        }).join("");
-
-        Array.prototype.forEach.call($("queueList").querySelectorAll("[data-track]"), function (row) {
-          row.addEventListener("click", function () {
-            stopTrack(false);
-            currentTrack = Number(row.getAttribute("data-track"));
-            playTrack();
-          });
-        });
-      }
-
-      function stopSynth() {
-        try {
-          if (oscillator) {
-            oscillator.stop();
-          }
-
-          if (oscillator && oscillator.second) {
-            oscillator.second.stop();
-          }
-        } catch (error) {}
-
-        try {
-          if (audioContext) {
-            audioContext.close();
-          }
-        } catch (error) {}
-
-        oscillator = null;
-        gain = null;
-        audioContext = null;
-      }
-
-      function stopTrack(resetProgress) {
-        playing = false;
-
-        $("musicModule").classList.remove("is-playing");
-        $("playTrack").textContent = "PLAY";
-
-        clearInterval(timer);
-        timer = null;
-
-        audio.pause();
-        stopSynth();
-
-        if (resetProgress) {
-          elapsed = 0;
-          updateProgress();
-        }
-      }
-
-      function playSynth(track) {
-        audioContext = new (window.AudioContext || window.webkitAudioContext)();
-
-        oscillator = audioContext.createOscillator();
-        var secondOscillator = audioContext.createOscillator();
-        gain = audioContext.createGain();
-
-        var filter = audioContext.createBiquadFilter();
-
-        oscillator.type = "sawtooth";
-        secondOscillator.type = "sine";
-
-        oscillator.frequency.value = track.freq || 96;
-        secondOscillator.frequency.value = (track.freq || 96) * 1.5;
-
-        filter.type = "lowpass";
-        filter.frequency.value = 620;
-
-        gain.gain.value = Number($("volumeControl").value) * 0.16;
-
-        oscillator.connect(filter);
-        secondOscillator.connect(filter);
-        filter.connect(gain);
-        gain.connect(audioContext.destination);
-
-        oscillator.start();
-        secondOscillator.start();
-
-        oscillator.second = secondOscillator;
-      }
-
-      function playTrack() {
-        var track = tracks[currentTrack];
-
-        $("trackTitle").textContent = track.title;
-
-        if (track.url) {
-          audio.src = track.url;
-          audio.volume = Number($("volumeControl").value);
-          audio.currentTime = elapsed || 0;
-          audio.play().catch(function () {});
-        } else {
-          try {
-            playSynth(track);
-          } catch (error) {}
-        }
-
-        playing = true;
-        startedAt = Date.now() - elapsed * 1000;
-
-        $("musicModule").classList.add("is-playing");
-        $("playTrack").textContent = "PAUSE";
-
-        renderQueue($("songSearch").value);
-
-        timer = setInterval(function () {
-          elapsed = Math.floor((Date.now() - startedAt) / 1000);
-
-          if (elapsed >= track.duration) {
-            nextTrack();
-            return;
-          }
-
-          updateProgress();
-        }, 500);
-
-        updateProgress();
-      }
-
-      function updateProgress() {
-        var track = tracks[currentTrack];
-        var percent = Math.min(100, Math.max(0, (elapsed / track.duration) * 100));
-
-        $("progressBar").style.width = percent + "%";
-        $("trackClock").textContent = Math.floor(elapsed / 60) + ":" + String(elapsed % 60).padStart(2, "0");
-        $("trackTitle").textContent = track.title;
-      }
-
-      function nextTrack() {
-        stopTrack(true);
-        currentTrack = (currentTrack + 1) % tracks.length;
-        playTrack();
-      }
-
-      function prevTrack() {
-        stopTrack(true);
-        currentTrack = (currentTrack - 1 + tracks.length) % tracks.length;
-        playTrack();
-      }
-
-      function setupMusic() {
-        renderQueue("");
-        updateProgress();
-
-        $("playTrack").addEventListener("click", function () {
-          if (playing) {
-            stopTrack(false);
-          } else {
-            playTrack();
-          }
-        });
-
-        $("nextTrack").addEventListener("click", nextTrack);
-        $("prevTrack").addEventListener("click", prevTrack);
-
-        $("volumeControl").addEventListener("input", function () {
-          audio.volume = Number(this.value);
-
-          if (gain) {
-            gain.gain.value = Number(this.value) * 0.16;
-          }
-        });
-
-        audio.addEventListener("ended", nextTrack);
-        audio.addEventListener("loadedmetadata", function () {
-          var track = tracks[currentTrack];
-          if (audio.duration && !isNaN(audio.duration) && Math.abs(audio.duration - track.duration) > 1) {
-            track.duration = Math.round(audio.duration);
-            renderQueue($("songSearch").value);
-            updateProgress();
-          }
-        });
-        audio.addEventListener("error", function () {
-          console.warn("Audio track failed to load:", tracks[currentTrack] && tracks[currentTrack].title);
-          stopTrack(true);
-        });
-
-        $("songSearch").addEventListener("input", function () {
-          renderQueue(this.value);
-        });
-
-        $("addSong").addEventListener("click", function () {
-          var value = $("songSearch").value.trim();
-
-          if (!value) {
-            return;
-          }
-
-          var isUrl = /^https?:\/\//i.test(value);
-
-          tracks.push({
-            title: isUrl ? "Imported Signal " + tracks.length : value,
-            mode: isUrl ? "url" : "synth",
-            url: isUrl ? value : "",
-            freq: 90 + (tracks.length * 17) % 90,
-            duration: isUrl ? 180 : 92
-          });
-
-          $("songSearch").value = "";
-
-          renderQueue("");
-        });
-      }
-
+   
 
       /* Invite link copy */
 
